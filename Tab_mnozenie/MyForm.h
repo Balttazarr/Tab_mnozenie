@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 namespace Tabmnozenie {
 
@@ -15,11 +15,16 @@ namespace Tabmnozenie {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 
+	///timer
 	public:
-		static int Minutes = 2;
+		static int Minutes = 1;
 		static int Seconds = 59;
 		String^ Min;
 		String^ Sec;
+
+	///start/reset
+	public:
+		bool startFLAG = 0;
 
 	public:
 		MyForm(void)
@@ -127,7 +132,7 @@ namespace Tabmnozenie {
 			this->buttonExit->Name = L"buttonExit";
 			this->buttonExit->Size = System::Drawing::Size(115, 44);
 			this->buttonExit->TabIndex = 0;
-			this->buttonExit->Text = L"Wyjœcie";
+			this->buttonExit->Text = L"WyjÅ›cie";
 			this->buttonExit->UseVisualStyleBackColor = true;
 			this->buttonExit->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -136,11 +141,11 @@ namespace Tabmnozenie {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label1->Location = System::Drawing::Point(170, 9);
+			this->label1->Location = System::Drawing::Point(153, 9);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(314, 31);
 			this->label1->TabIndex = 1;
-			this->label1->Text = L"TABLICZKA MNO¯ENIA";
+			this->label1->Text = L"TABLICZKA MNOÅ»ENIA";
 			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
 			// 
 			// mul1
@@ -279,7 +284,7 @@ namespace Tabmnozenie {
 			this->buttonCheck->Name = L"buttonCheck";
 			this->buttonCheck->Size = System::Drawing::Size(115, 40);
 			this->buttonCheck->TabIndex = 19;
-			this->buttonCheck->Text = L"SprawdŸ";
+			this->buttonCheck->Text = L"SprawdÅº";
 			this->buttonCheck->UseVisualStyleBackColor = true;
 			this->buttonCheck->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
 			// 
@@ -291,7 +296,7 @@ namespace Tabmnozenie {
 			this->buttonNext->Name = L"buttonNext";
 			this->buttonNext->Size = System::Drawing::Size(115, 36);
 			this->buttonNext->TabIndex = 20;
-			this->buttonNext->Text = L"Nastêpne";
+			this->buttonNext->Text = L"NastÄ™pne";
 			this->buttonNext->UseVisualStyleBackColor = true;
 			this->buttonNext->Click += gcnew System::EventHandler(this, &MyForm::buttonNext_Click);
 			// 
@@ -309,17 +314,16 @@ namespace Tabmnozenie {
 			this->label6->AutoSize = true;
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label6->Location = System::Drawing::Point(146, 343);
+			this->label6->Location = System::Drawing::Point(138, 336);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(144, 26);
 			this->label6->TabIndex = 22;
-			this->label6->Text = L"Iloœæ punktów";
+			this->label6->Text = L"IloÅ›Ä‡ punktÃ³w";
 			this->label6->Click += gcnew System::EventHandler(this, &MyForm::label6_Click);
 			// 
 			// timer1
 			// 
 			this->timer1->Enabled = true;
-			this->timer1->Interval = 1000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// TimeLeft
@@ -366,33 +370,71 @@ namespace Tabmnozenie {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) 
+
+
+
+	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		startFLAG = 1;
+
+	}
+	//timer
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (startFLAG)
+		{
+			if(Minutes>0)
+			{
+				Seconds--;
+				if (Seconds == 0)
+				{
+				Minutes--;
+				Seconds = 59;
+				}
+				Sec = Convert::ToString(Seconds);
+				Min = Convert::ToString(Minutes);
+				TimeLeft->Text = Min + ":" + Sec;
+			}
+			if (Minutes==0)
+			{
+				if (Seconds <= 59 && Seconds >0)
+				{
+					Seconds--;
+					Sec = Convert::ToString(Seconds);
+					TimeLeft->Text = Min + ":" + Sec;
+				}
+			}
+
+		}
+	}
+	
+	//pierwszy czynnik
+	private: System::Void mul1_TextChanged(System::Object^  sender, System::EventArgs^  e) 
+	{
+
+	}
+
+	//drugi czynnik
+	private: System::Void mul2_TextChanged(System::Object^  sender, System::EventArgs^  e) 
+	{
+
+    }
+
+	private: System::Void buttonReset_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+		startFLAG = 0;
+		Minutes = 2;
+		Seconds = 59;
+		Sec = Convert::ToString(Seconds);
+		Min = Convert::ToString(Minutes);
+		TimeLeft->Text = Min + ":" + Sec;
+		//inne zerowe wartosci
+	}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		MessageBox::Show("Do zobaczenia Przemek! :)");
 		Close();
-		
 	}
-
-
-	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e) 
-	{
-
-
-	}
-    private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
-	Seconds--;
-
-	if (Seconds == 0)
-	{
-		Minutes--;
-		Seconds = 59;
-	}
-	Sec = Convert::ToString(Seconds);
-	Min = Convert::ToString(Minutes);
-	TimeLeft->Text = Min + ":" + Sec;
-}
-
-
 
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
@@ -400,18 +442,15 @@ private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  
 }
 private: System::Void textBox5_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void mul1_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-}
-private: System::Void mul2_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-}
+
+
 private: System::Void answer_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void correct_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void buttonReset_Click(System::Object^  sender, System::EventArgs^  e) {
-}
+
 private: System::Void TotalPoints_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
 private: System::Void buttonNext_Click(System::Object^  sender, System::EventArgs^  e) {
