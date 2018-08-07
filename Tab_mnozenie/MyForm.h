@@ -401,10 +401,15 @@ namespace Tabmnozenie {
 				{
 					Seconds--;
 					Sec = Convert::ToString(Seconds);
-					TimeLeft->Text = Min + ":" + Sec;
+					TimeLeft->Text = Min + ":" + Sec;	
+				}
+				else if(Minutes==0 && Seconds==0)
+				{
+					startFLAG = 0;
+					MessageBox::Show("Koniec czasu!");
 					
 				}
-
+				
 			}
 
 		}
