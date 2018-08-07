@@ -402,7 +402,9 @@ namespace Tabmnozenie {
 					Seconds--;
 					Sec = Convert::ToString(Seconds);
 					TimeLeft->Text = Min + ":" + Sec;
+					
 				}
+
 			}
 
 		}
