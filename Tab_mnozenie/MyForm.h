@@ -379,6 +379,18 @@ namespace Tabmnozenie {
 
 
 	}
+    private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) {
+	Seconds--;
+
+	if (Seconds == 0)
+	{
+		Minutes--;
+		Seconds = 59;
+	}
+	Sec = Convert::ToString(Seconds);
+	Min = Convert::ToString(Minutes);
+	TimeLeft->Text = Min + ":" + Sec;
+}
 
 
 
@@ -410,6 +422,7 @@ private: System::Void TimeLeft_Click(System::Object^  sender, System::EventArgs^
 
 
 
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //labele i inne 
 private: System::Void label2_Click_1(System::Object^  sender, System::EventArgs^  e) {
@@ -428,6 +441,7 @@ private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, Sys
 }
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
+
 
 };
 }
