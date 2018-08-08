@@ -26,6 +26,27 @@ namespace Tabmnozenie {
 	public:
 		bool startFLAG = 0;
 
+    ///logika sprawdzania mnozenia
+	public:
+		int x, y;
+		String^ xX;
+	private: System::Windows::Forms::Button^  buttonCheck;
+	public:
+		String ^ yY;
+		void GenerateMul()
+		{
+			Random^ rd = gcnew Random;
+			x = rd->Next(10);
+			y = rd->Next(10);
+			mul1->Text = Convert::ToString(x);
+			mul2->Text = Convert::ToString(y);
+
+		}
+	public:
+		int sum = 0;
+
+
+
 	public:
 		MyForm(void)
 		{
@@ -70,7 +91,7 @@ namespace Tabmnozenie {
 	private: System::Windows::Forms::TextBox^  answer;
 	private: System::Windows::Forms::Button^  buttonStart;
 	private: System::Windows::Forms::TextBox^  correct;
-	private: System::Windows::Forms::Button^  buttonCheck;
+
 	private: System::Windows::Forms::Button^  buttonNext;
 	private: System::Windows::Forms::TextBox^  TotalPoints;
 
@@ -116,12 +137,12 @@ namespace Tabmnozenie {
 			this->answer = (gcnew System::Windows::Forms::TextBox());
 			this->buttonStart = (gcnew System::Windows::Forms::Button());
 			this->correct = (gcnew System::Windows::Forms::TextBox());
-			this->buttonCheck = (gcnew System::Windows::Forms::Button());
 			this->buttonNext = (gcnew System::Windows::Forms::Button());
 			this->TotalPoints = (gcnew System::Windows::Forms::TextBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->TimeLeft = (gcnew System::Windows::Forms::Label());
+			this->buttonCheck = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// buttonExit
@@ -249,6 +270,7 @@ namespace Tabmnozenie {
 			this->answer->Name = L"answer";
 			this->answer->Size = System::Drawing::Size(59, 36);
 			this->answer->TabIndex = 16;
+			this->answer->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->answer->TextChanged += gcnew System::EventHandler(this, &MyForm::answer_TextChanged);
 			// 
 			// buttonStart
@@ -273,20 +295,8 @@ namespace Tabmnozenie {
 			this->correct->Name = L"correct";
 			this->correct->Size = System::Drawing::Size(59, 36);
 			this->correct->TabIndex = 18;
+			this->correct->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->correct->TextChanged += gcnew System::EventHandler(this, &MyForm::correct_TextChanged);
-			// 
-			// buttonCheck
-			// 
-			this->buttonCheck->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->buttonCheck->ForeColor = System::Drawing::Color::Blue;
-			this->buttonCheck->Location = System::Drawing::Point(427, 130);
-			this->buttonCheck->Name = L"buttonCheck";
-			this->buttonCheck->Size = System::Drawing::Size(115, 40);
-			this->buttonCheck->TabIndex = 19;
-			this->buttonCheck->Text = L"Sprawdź";
-			this->buttonCheck->UseVisualStyleBackColor = true;
-			this->buttonCheck->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
 			// 
 			// buttonNext
 			// 
@@ -302,11 +312,14 @@ namespace Tabmnozenie {
 			// 
 			// TotalPoints
 			// 
+			this->TotalPoints->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
 			this->TotalPoints->Location = System::Drawing::Point(307, 336);
 			this->TotalPoints->Multiline = true;
 			this->TotalPoints->Name = L"TotalPoints";
 			this->TotalPoints->Size = System::Drawing::Size(59, 33);
 			this->TotalPoints->TabIndex = 21;
+			this->TotalPoints->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->TotalPoints->TextChanged += gcnew System::EventHandler(this, &MyForm::TotalPoints_TextChanged);
 			// 
 			// label6
@@ -339,16 +352,28 @@ namespace Tabmnozenie {
 			this->TimeLeft->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			this->TimeLeft->Click += gcnew System::EventHandler(this, &MyForm::TimeLeft_Click);
 			// 
+			// buttonCheck
+			// 
+			this->buttonCheck->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
+			this->buttonCheck->ForeColor = System::Drawing::Color::MediumBlue;
+			this->buttonCheck->Location = System::Drawing::Point(427, 134);
+			this->buttonCheck->Name = L"buttonCheck";
+			this->buttonCheck->Size = System::Drawing::Size(115, 35);
+			this->buttonCheck->TabIndex = 24;
+			this->buttonCheck->Text = L"Sprawdź";
+			this->buttonCheck->UseVisualStyleBackColor = true;
+			this->buttonCheck->Click += gcnew System::EventHandler(this, &MyForm::buttonCheck_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(603, 468);
+			this->Controls->Add(this->buttonCheck);
 			this->Controls->Add(this->TimeLeft);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->TotalPoints);
 			this->Controls->Add(this->buttonNext);
-			this->Controls->Add(this->buttonCheck);
 			this->Controls->Add(this->correct);
 			this->Controls->Add(this->buttonStart);
 			this->Controls->Add(this->answer);
@@ -376,6 +401,11 @@ namespace Tabmnozenie {
 	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		startFLAG = 1;
+		if (startFLAG)
+		{
+			GenerateMul();
+
+		}
 
 	}
 	//timer
@@ -407,7 +437,8 @@ namespace Tabmnozenie {
 				{
 					startFLAG = 0;
 					MessageBox::Show("Koniec czasu!");
-					
+					sum = 0;
+					TotalPoints->Text = Convert::ToString(sum);
 				}
 				
 			}
@@ -418,13 +449,10 @@ namespace Tabmnozenie {
 	//pierwszy czynnik
 	private: System::Void mul1_TextChanged(System::Object^  sender, System::EventArgs^  e) 
 	{
-
 	}
-
 	//drugi czynnik
 	private: System::Void mul2_TextChanged(System::Object^  sender, System::EventArgs^  e) 
-	{
-
+	{	
     }
 
 	private: System::Void buttonReset_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -435,7 +463,49 @@ namespace Tabmnozenie {
 		Sec = Convert::ToString(Seconds);
 		Min = Convert::ToString(Minutes);
 		TimeLeft->Text = Min + ":" + Sec;
+		mul1->Text = "";
+		mul2->Text = "";
+		answer->Text = "";
+		correct->Text = "";
+		TotalPoints->Text = "";
+		grade->Text = "";
+		sum = 0;
+		answer->BackColor = System::Drawing::Color::White;
+
 		//inne zerowe wartosci
+	}
+
+
+private: System::Void buttonCheck_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	int multiplication;
+	multiplication = x * y;
+	String^ aswr = answer->Text;
+	int final = Convert::ToInt32(aswr);
+	//TUTAJ WPISAC exception unhandled !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! xxxxxxx xxxxx xxxx xxx
+	//try {}
+	//catch{}
+	if (final == multiplication)
+	{///dobra odpowiedz
+		sum++;
+		answer->BackColor = System::Drawing::Color::LawnGreen;
+		correct->Text = Convert::ToString(multiplication);
+		TotalPoints->Text = Convert::ToString(sum);
+	}
+	else 
+	{///zla odpowiedz
+		answer->BackColor = System::Drawing::Color::Red;
+		correct->Text = Convert::ToString(multiplication);
+	}
+
+}
+
+	private: System::Void buttonNext_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+		answer->Text = "";
+		correct->Text = "";
+		answer->BackColor = System::Drawing::Color::White;
+		GenerateMul();
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -455,13 +525,11 @@ private: System::Void answer_TextChanged(System::Object^  sender, System::EventA
 }
 private: System::Void correct_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-}
+
 
 private: System::Void TotalPoints_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void buttonNext_Click(System::Object^  sender, System::EventArgs^  e) {
-}
+
 private: System::Void TimeLeft_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 
@@ -487,6 +555,7 @@ private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, Sys
 }
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
+
 
 
 };
