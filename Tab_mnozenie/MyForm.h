@@ -43,7 +43,8 @@ namespace Tabmnozenie {
 
 		}
 	public:
-		int sum = 0;
+		int sum = 0; // punkty
+		int gradelogic = 0;
 
 
 
@@ -200,7 +201,7 @@ namespace Tabmnozenie {
 			this->grade->Size = System::Drawing::Size(59, 36);
 			this->grade->TabIndex = 8;
 			this->grade->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->grade->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox5_TextChanged);
+			this->grade->TextChanged += gcnew System::EventHandler(this, &MyForm::grade_TextChanged);
 			// 
 			// label2
 			// 
@@ -479,12 +480,19 @@ namespace Tabmnozenie {
 private: System::Void buttonCheck_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	int multiplication;
-	multiplication = x * y;
-	String^ aswr = answer->Text;
-	int final = Convert::ToInt32(aswr);
-	//TUTAJ WPISAC exception unhandled !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! xxxxxxx xxxxx xxxx xxx
-	//try {}
-	//catch{}
+	int final;
+	try
+	{
+		multiplication = x * y;
+		String^ aswr = answer->Text;
+		final = Convert::ToInt32(aswr);
+		gradelogic++;
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Exception: " + ex->Message);
+	}
+
 	if (final == multiplication)
 	{///dobra odpowiedz
 		sum++;
@@ -494,6 +502,7 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 	}
 	else 
 	{///zla odpowiedz
+
 		answer->BackColor = System::Drawing::Color::Red;
 		correct->Text = Convert::ToString(multiplication);
 	}
@@ -507,6 +516,11 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 		answer->BackColor = System::Drawing::Color::White;
 		GenerateMul();
 	}
+	private: System::Void grade_TextChanged(System::Object^  sender, System::EventArgs^  e) 
+	{
+		int GradeDiv = (sum / gradelogic)*100;
+		grade->Text
+	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		MessageBox::Show("Do zobaczenia Przemek! :)");
@@ -517,8 +531,7 @@ private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e
 }
 private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
 }
-private: System::Void textBox5_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-}
+
 
 
 private: System::Void answer_TextChanged(System::Object^  sender, System::EventArgs^  e) {
