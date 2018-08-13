@@ -44,7 +44,8 @@ namespace Tabmnozenie {
 		}
 	public:
 		int sum = 0; // punkty
-		int gradelogic = 0;
+		int gradeNext = 1;
+		float GradeDiv = 1.0;
 
 
 
@@ -173,7 +174,7 @@ namespace Tabmnozenie {
 			// mul1
 			// 
 			this->mul1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->mul1->Location = System::Drawing::Point(91, 134);
+			this->mul1->Location = System::Drawing::Point(90, 176);
 			this->mul1->Multiline = true;
 			this->mul1->Name = L"mul1";
 			this->mul1->Size = System::Drawing::Size(59, 36);
@@ -184,7 +185,7 @@ namespace Tabmnozenie {
 			// mul2
 			// 
 			this->mul2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->mul2->Location = System::Drawing::Point(208, 134);
+			this->mul2->Location = System::Drawing::Point(208, 175);
 			this->mul2->Multiline = true;
 			this->mul2->Name = L"mul2";
 			this->mul2->Size = System::Drawing::Size(59, 36);
@@ -208,7 +209,7 @@ namespace Tabmnozenie {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Pixel,
 				static_cast<System::Byte>(238)));
-			this->label2->Location = System::Drawing::Point(167, 141);
+			this->label2->Location = System::Drawing::Point(168, 182);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(20, 20);
 			this->label2->TabIndex = 9;
@@ -220,7 +221,7 @@ namespace Tabmnozenie {
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label3->Location = System::Drawing::Point(276, 137);
+			this->label3->Location = System::Drawing::Point(276, 181);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(25, 26);
 			this->label3->TabIndex = 10;
@@ -242,7 +243,7 @@ namespace Tabmnozenie {
 			// buttonReset
 			// 
 			this->buttonReset->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
-			this->buttonReset->Location = System::Drawing::Point(427, 322);
+			this->buttonReset->Location = System::Drawing::Point(152, 78);
 			this->buttonReset->Name = L"buttonReset";
 			this->buttonReset->Size = System::Drawing::Size(115, 40);
 			this->buttonReset->TabIndex = 12;
@@ -255,7 +256,7 @@ namespace Tabmnozenie {
 			this->label5->AutoSize = true;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->label5->Location = System::Drawing::Point(154, 222);
+			this->label5->Location = System::Drawing::Point(154, 263);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(136, 26);
 			this->label5->TabIndex = 13;
@@ -266,7 +267,7 @@ namespace Tabmnozenie {
 			// 
 			this->answer->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->answer->Location = System::Drawing::Point(307, 134);
+			this->answer->Location = System::Drawing::Point(307, 175);
 			this->answer->Multiline = true;
 			this->answer->Name = L"answer";
 			this->answer->Size = System::Drawing::Size(59, 36);
@@ -279,7 +280,7 @@ namespace Tabmnozenie {
 			this->buttonStart->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
 			this->buttonStart->ForeColor = System::Drawing::Color::DarkGreen;
-			this->buttonStart->Location = System::Drawing::Point(35, 52);
+			this->buttonStart->Location = System::Drawing::Point(35, 78);
 			this->buttonStart->Name = L"buttonStart";
 			this->buttonStart->Size = System::Drawing::Size(92, 40);
 			this->buttonStart->TabIndex = 17;
@@ -291,7 +292,7 @@ namespace Tabmnozenie {
 			// 
 			this->correct->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->correct->Location = System::Drawing::Point(307, 219);
+			this->correct->Location = System::Drawing::Point(307, 253);
 			this->correct->Multiline = true;
 			this->correct->Name = L"correct";
 			this->correct->Size = System::Drawing::Size(59, 36);
@@ -303,7 +304,7 @@ namespace Tabmnozenie {
 			// 
 			this->buttonNext->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->buttonNext->Location = System::Drawing::Point(427, 219);
+			this->buttonNext->Location = System::Drawing::Point(427, 250);
 			this->buttonNext->Name = L"buttonNext";
 			this->buttonNext->Size = System::Drawing::Size(115, 36);
 			this->buttonNext->TabIndex = 20;
@@ -357,7 +358,7 @@ namespace Tabmnozenie {
 			// 
 			this->buttonCheck->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
 			this->buttonCheck->ForeColor = System::Drawing::Color::MediumBlue;
-			this->buttonCheck->Location = System::Drawing::Point(427, 134);
+			this->buttonCheck->Location = System::Drawing::Point(427, 176);
 			this->buttonCheck->Name = L"buttonCheck";
 			this->buttonCheck->Size = System::Drawing::Size(115, 35);
 			this->buttonCheck->TabIndex = 24;
@@ -438,8 +439,9 @@ namespace Tabmnozenie {
 				{
 					startFLAG = 0;
 					MessageBox::Show("Koniec czasu!");
-					sum = 0;
-					TotalPoints->Text = Convert::ToString(sum);
+					//TotalPoints->Text = Convert::ToString(sum);
+					GradeDiv = (sum/gradeNext); // liczenie procentu z danych punktow
+					grade->Text = Convert::ToString(GradeDiv); // wyswietlanie oceny
 				}
 				
 			}
@@ -486,7 +488,7 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 		multiplication = x * y;
 		String^ aswr = answer->Text;
 		final = Convert::ToInt32(aswr);
-		gradelogic++;
+		gradeNext++;
 	}
 	catch (Exception^ ex)
 	{
@@ -518,8 +520,7 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 	}
 	private: System::Void grade_TextChanged(System::Object^  sender, System::EventArgs^  e) 
 	{
-		int GradeDiv = (sum / gradelogic)*100;
-		grade->Text
+
 	}
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e)
 	{
