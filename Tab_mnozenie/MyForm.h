@@ -442,7 +442,7 @@ namespace Tabmnozenie {
 					//TotalPoints->Text = Convert::ToString(sum);
 					GradeDiv = (sum/gradeNext); // liczenie procentu z danych punktow
 					grade->Text = Convert::ToString(GradeDiv); // wyswietlanie oceny
-				}
+				}// tu trzeba popracowac #_#_#_#_#
 				
 			}
 
