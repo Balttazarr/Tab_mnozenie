@@ -45,7 +45,8 @@ namespace Tabmnozenie {
 	public:
 		int sum = 0; // punkty
 		int gradeNext = 1;
-		float GradeDiv = 1.0;
+		float GradeDiv ;
+		int GradeFinal = 1;
 
 
 
@@ -440,8 +441,32 @@ namespace Tabmnozenie {
 					startFLAG = 0;
 					MessageBox::Show("Koniec czasu!");
 					//TotalPoints->Text = Convert::ToString(sum);
-					GradeDiv = (sum/gradeNext); // liczenie procentu z danych punktow
-					grade->Text = Convert::ToString(GradeDiv); // wyswietlanie oceny
+					GradeDiv = ((double)sum/(double)gradeNext)*100; // liczenie procentu z danych punktow
+					if (GradeDiv == 100)
+					{
+						GradeFinal = 6;
+					}
+					else if (GradeDiv >= 85 && GradeDiv <100  )
+					{
+						GradeFinal = 5;
+					}
+					else if (GradeDiv >= 70 && GradeDiv <85)
+					{
+						GradeFinal = 4;
+					}
+					else if (GradeDiv >= 50 && GradeDiv <70)
+					{
+						GradeFinal = 3;
+					}
+					else if (GradeDiv >= 30 && GradeDiv <50)
+					{
+						GradeFinal = 2;
+					}
+					else if (GradeDiv <30)
+					{
+						GradeFinal = 1;
+					}
+					grade->Text = Convert::ToString(GradeFinal); // wyswietlanie oceny
 				}// tu trzeba popracowac #_#_#_#_#
 				
 			}
