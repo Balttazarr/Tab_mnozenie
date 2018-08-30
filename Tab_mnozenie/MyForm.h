@@ -25,6 +25,7 @@ namespace Tabmnozenie {
 	///start/reset
 	public:
 		bool startFLAG = 0;
+		bool nextFLAG = 1;
 
     ///logika sprawdzania mnozenia
 	public:
@@ -36,15 +37,15 @@ namespace Tabmnozenie {
 		void GenerateMul()
 		{
 			Random^ rd = gcnew Random;
-			x = rd->Next(10);
-			y = rd->Next(10);
+			x = rd->Next(10)+2;
+			y = rd->Next(10)+2;
 			mul1->Text = Convert::ToString(x);
 			mul2->Text = Convert::ToString(y);
 
 		}
 	public:
 		int sum = 0; // punkty
-		int gradeNext = 1;
+		int gradeNext = 0;
 		float GradeDiv ;
 		int GradeFinal = 1;
 
@@ -293,7 +294,7 @@ namespace Tabmnozenie {
 			// 
 			this->correct->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->correct->Location = System::Drawing::Point(307, 253);
+			this->correct->Location = System::Drawing::Point(307, 260);
 			this->correct->Multiline = true;
 			this->correct->Name = L"correct";
 			this->correct->Size = System::Drawing::Size(59, 36);
@@ -404,6 +405,7 @@ namespace Tabmnozenie {
 	private: System::Void buttonStart_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		startFLAG = 1;
+		nextFLAG = 1;
 		if (startFLAG)
 		{
 			GenerateMul();
@@ -486,6 +488,7 @@ namespace Tabmnozenie {
 	private: System::Void buttonReset_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
 		startFLAG = 0;
+		nextFLAG = 0;
 		Minutes = 2;
 		Seconds = 59;
 		Sec = Convert::ToString(Seconds);
@@ -506,34 +509,39 @@ namespace Tabmnozenie {
 
 private: System::Void buttonCheck_Click(System::Object^  sender, System::EventArgs^  e) 
 {
-	int multiplication;
-	int final;
-	try
+	if(nextFLAG==1)
 	{
-		multiplication = x * y;
-		String^ aswr = answer->Text;
-		final = Convert::ToInt32(aswr);
-		gradeNext++;
-	}
-	catch (Exception^ ex)
-	{
-		MessageBox::Show("Exception: " + ex->Message);
-	}
+		int multiplication;
+		int final;
+		try
+		{
+			multiplication = x * y;
+			String^ aswr = answer->Text;
+			final = Convert::ToInt32(aswr);
+			gradeNext++;
+			nextFLAG = 0;
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Exception: " + ex->Message);
+		}
 
-	if (final == multiplication)
-	{///dobra odpowiedz
-		sum++;
-		answer->BackColor = System::Drawing::Color::LawnGreen;
-		correct->Text = Convert::ToString(multiplication);
-		TotalPoints->Text = Convert::ToString(sum);
-	}
-	else 
-	{///zla odpowiedz
+		if (final == multiplication)
+		{///dobra odpowiedz
+			sum++;
+			answer->BackColor = System::Drawing::Color::LawnGreen;
+			correct->Text = Convert::ToString(multiplication);
+			TotalPoints->Text = Convert::ToString(sum);
+		}
+		else
+		{///zla odpowiedz
 
-		answer->BackColor = System::Drawing::Color::Red;
-		correct->Text = Convert::ToString(multiplication);
+			answer->BackColor = System::Drawing::Color::Red;
+			correct->Text = Convert::ToString(multiplication);
+		}
 	}
-
+	
+	
 }
 
 	private: System::Void buttonNext_Click(System::Object^  sender, System::EventArgs^  e)
@@ -541,6 +549,7 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 		answer->Text = "";
 		correct->Text = "";
 		answer->BackColor = System::Drawing::Color::White;
+		nextFLAG = 1;
 		GenerateMul();
 	}
 	private: System::Void grade_TextChanged(System::Object^  sender, System::EventArgs^  e) 
