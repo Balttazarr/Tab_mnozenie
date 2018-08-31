@@ -32,6 +32,8 @@ namespace Tabmnozenie {
 		int x, y;
 		String^ xX;
 	private: System::Windows::Forms::Button^  buttonCheck;
+	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::TextBox^  nr_zadania;
 	public:
 		String ^ yY;
 		void GenerateMul()
@@ -48,6 +50,7 @@ namespace Tabmnozenie {
 		int gradeNext = 0;
 		float GradeDiv ;
 		int GradeFinal = 1;
+		int nr_zad = 1;
 
 
 
@@ -147,6 +150,8 @@ namespace Tabmnozenie {
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->TimeLeft = (gcnew System::Windows::Forms::Label());
 			this->buttonCheck = (gcnew System::Windows::Forms::Button());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->nr_zadania = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// buttonExit
@@ -341,6 +346,7 @@ namespace Tabmnozenie {
 			// timer1
 			// 
 			this->timer1->Enabled = true;
+			this->timer1->Interval = 1000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &MyForm::timer1_Tick);
 			// 
 			// TimeLeft
@@ -368,11 +374,35 @@ namespace Tabmnozenie {
 			this->buttonCheck->UseVisualStyleBackColor = true;
 			this->buttonCheck->Click += gcnew System::EventHandler(this, &MyForm::buttonCheck_Click);
 			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 16));
+			this->label7->Location = System::Drawing::Point(372, 339);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(18, 26);
+			this->label7->TabIndex = 25;
+			this->label7->Text = L"/";
+			// 
+			// nr_zadania
+			// 
+			this->nr_zadania->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F));
+			this->nr_zadania->Location = System::Drawing::Point(396, 336);
+			this->nr_zadania->Multiline = true;
+			this->nr_zadania->Name = L"nr_zadania";
+			this->nr_zadania->Size = System::Drawing::Size(59, 33);
+			this->nr_zadania->TabIndex = 26;
+			this->nr_zadania->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->nr_zadania->UseWaitCursor = true;
+			this->nr_zadania->TextChanged += gcnew System::EventHandler(this, &MyForm::nr_zadania_TextChanged);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(603, 468);
+			this->Controls->Add(this->nr_zadania);
+			this->Controls->Add(this->label7);
 			this->Controls->Add(this->buttonCheck);
 			this->Controls->Add(this->TimeLeft);
 			this->Controls->Add(this->label6);
@@ -409,6 +439,7 @@ namespace Tabmnozenie {
 		if (startFLAG)
 		{
 			GenerateMul();
+			nr_zadania->Text = Convert::ToString(nr_zad);
 
 		}
 
@@ -496,6 +527,8 @@ namespace Tabmnozenie {
 		TimeLeft->Text = Min + ":" + Sec;
 		mul1->Text = "";
 		mul2->Text = "";
+		nr_zadania->Text = "";
+		nr_zad = 1;
 		answer->Text = "";
 		correct->Text = "";
 		TotalPoints->Text = "";
@@ -549,7 +582,9 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 		answer->Text = "";
 		correct->Text = "";
 		answer->BackColor = System::Drawing::Color::White;
+		nr_zadania->Text = Convert::ToString(nr_zad);
 		nextFLAG = 1;
+		nr_zad++;
 		GenerateMul();
 	}
 	private: System::Void grade_TextChanged(System::Object^  sender, System::EventArgs^  e) 
@@ -560,6 +595,9 @@ private: System::Void buttonCheck_Click(System::Object^  sender, System::EventAr
 	{
 		MessageBox::Show("Do zobaczenia Przemek! :)");
 		Close();
+	}
+	private: System::Void nr_zadania_TextChanged(System::Object^  sender, System::EventArgs^  e) 
+	{
 	}
 
 private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e) {
@@ -603,6 +641,7 @@ private: System::Void listBox1_SelectedIndexChanged(System::Object^  sender, Sys
 }
 private: System::Void label6_Click(System::Object^  sender, System::EventArgs^  e) {
 }
+
 
 
 
